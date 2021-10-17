@@ -7,25 +7,26 @@ import {
   saveUserToCookie,
 } from '@/utils/cookies';
 import { loginUser } from '@/api/auth';
+import { fetchAPT } from '@/api/posts';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    username: getUserFromCookie() || '',
+    loginId: getUserFromCookie() || '',
     token: getAuthFromCookie() || '',
   },
   getters: {
     isLogin(state) {
-      return state.username !== '';
+      return state.loginId !== '';
     },
   },
   mutations: {
-    setUsername(state, username) {
-      state.username = username;
+    setUsername(state, loginId) {
+      state.loginId = loginId;
     },
     clearUsername(state) {
-      state.username = '';
+      state.loginId = '';
     },
     setToken(state, token) {
       state.token = token;
@@ -36,12 +37,12 @@ export default new Vuex.Store({
   },
   actions: {
     async LOGIN({ commit }, userData) {
+      console.log(userData);
       const { data } = await loginUser(userData);
-      console.log(data.token);
       commit('setToken', data.token);
-      commit('setUsername', data.user.username);
+      commit('setUsername', data.loginId);
       saveAuthToCookie(data.token);
-      saveUserToCookie(data.user.username);
+      saveUserToCookie(data.loginId);
       return data;
     },
   },

@@ -3,10 +3,10 @@
     <div class="form-wrapper form-wrapper-sm">
       <form @submit.prevent="submitForm" class="form">
         <div>
-          <label for="username">id:</label>
-          <input id="username" type="text" v-model="username" />
+          <label for="loginId">id:</label>
+          <input id="loginId" type="text" v-model="loginId" />
           <p class="validation-text">
-            <span class="warning" v-if="!isUsernameValid && username">
+            <span class="warning" v-if="!isUsernameValid && loginId">
               Please enter an email address
             </span>
           </p>
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       // form values
-      username: '',
+      loginId: '',
       password: '',
       // log
       logMessage: '',
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     isUsernameValid() {
-      return validateEmail(this.username);
+      return validateEmail(this.loginId);
     },
   },
   methods: {
@@ -51,21 +51,24 @@ export default {
       try {
         // 비즈니스 로직
         const userData = {
-          username: this.username,
+          loginId: this.loginId,
           password: this.password,
         };
         await this.$store.dispatch('LOGIN', userData);
+
         this.$router.push('/main');
+        console.log('*****************');
       } catch (error) {
         // 에러 핸들링할 코드
-        console.log(error.response.data);
-        this.logMessage = error.response.data;
+        //console.log(error);
+        //console.log(error.response.data);
+        // this.logMessage = error.response.data;
       } finally {
         this.initForm();
       }
     },
     initForm() {
-      this.username = '';
+      this.loginId = '';
       this.password = '';
     },
   },

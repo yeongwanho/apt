@@ -1,15 +1,18 @@
 <template>
   <li>
-    <div class="post-title">
-      {{ postItem.title }}
+    <div class="post-city">
+      {{ postItem.cityL }}
+      {{ postItem.cityM }}
+      {{ postItem.cityS }}
     </div>
     <div class="post-contents">
-      {{ postItem.contents }}
+      {{ postItem.aptName }}
+
+      {{ postItem.aptRow }} 층 {{ postItem.price }} 만원
+      <b-icon icon="plus-circle" @click="aptDetail"></b-icon>
     </div>
     <div class="post-time">
-      {{ postItem.createdAt | formatDate }}
-      <i class="icon ion-md-create" @click="routeEditPage"></i>
-      <i class="icon ion-md-trash" @click="deleteItem"></i>
+      {{ $moment(postItem.contractDate).format('YYYY-MM-DD') }}
     </div>
   </li>
 </template>
@@ -35,6 +38,21 @@ export default {
       const id = this.postItem._id;
       this.$router.push(`/post/${id}`);
     },
+    aptName() {
+      if (!this.postItem.aptName.includes('아파트')) {
+        this.postItem.aptName = this.postItem.aptName + '아파트';
+      }
+    },
+    aptDetail() {
+      console.log(this.postItem);
+      const id = this.postItem.id;
+      const aptName = this.postItem.aptName;
+
+      this.$router.push({ name: 'APT', params: { id: id, aptName: aptName } });
+    },
+  },
+  created() {
+    this.aptName();
   },
 };
 </script>

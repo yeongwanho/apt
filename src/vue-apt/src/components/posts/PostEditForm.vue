@@ -1,53 +1,65 @@
 <template>
-  <div class="contents">
-    <h1 class="page-header">Edit Post</h1>
-    <div class="form-wrapper">
-      <form class="form" @submit.prevent="submitForm">
-        <div>
-          <label for="title">Title:</label>
-          <input id="title" type="text" v-model="title" />
-        </div>
-        <div>
-          <label for="contents">Contents:</label>
-          <textarea id="contents" type="text" rows="5" v-model="contents" />
-          <p
-            v-if="!isContentsValid"
-            class="validation-text warning isContentTooLong"
-          >
-            Contents length must be less than 250
-          </p>
-        </div>
-        <button type="submit" class="btn">Edit</button>
-      </form>
-      <p class="log">
-        {{ logMessage }}
-      </p>
-    </div>
+  <div class="container">
+    <line-chart
+      v-if="loaded"
+      :aptPrice="aptPrice"
+      :aptDate="aptDate"
+      :aptName="aptName"
+    />
   </div>
 </template>
 
 <script>
+import LineChart from '@/components/common/Chart.vue';
 import { fetchPost, editPost } from '@/api/posts';
 
 export default {
   data() {
     return {
-      title: '',
+      loaded: false,
+      chartdata: null,
+      aptName: '',
+      aptPrice: [],
       contents: '',
       logMessage: '',
+      aptDate: [],
     };
+  },
+  name: 'LinChartContainer',
+  components: {
+    LineChart,
   },
   computed: {
     isContentsValid() {
       return this.contents.length <= 200;
     },
   },
+
+  async mounted() {
+    const aptData = {
+      id: this.$route.params.id,
+      aptName: this.$route.params.aptName,
+    };
+    this.loaded = false;
+    try {
+      const { data } = await fetchPost(aptData);
+
+      this.aptDate = data.aptDate;
+      this.aptPrice = data.aptPrice.map(Number);
+      this.aptName = data.aptName;
+      console.log('아파트 이름');
+      console.log(this.aptName);
+
+      this.loaded = true;
+    } catch (e) {
+      console.log(e);
+    }
+  },
   methods: {
     async submitForm() {
       const id = this.$route.params.id;
       try {
         await editPost(id, {
-          title: this.title,
           contents: this.contents,
         });
         this.$router.push('/main');
@@ -56,12 +68,6 @@ export default {
         this.logMessage = error;
       }
     },
-  },
-  async created() {
-    const id = this.$route.params.id;
-    const { data } = await fetchPost(id);
-    this.title = data.title;
-    this.contents = data.contents;
   },
 };
 </script>

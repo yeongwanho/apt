@@ -2,13 +2,44 @@
 import { posts } from './index';
 
 // 학습 노트 데이터 목록을 조회하는 API
-function fetchPosts() {
-  return posts.get('/');
+function fetchPosts(page) {
+  console.log(page);
+  return posts.get('', {
+    params: {
+      page: page,
+      size: 20,
+    },
+  });
+}
+function fetchDetailApt(aptData) {
+  return posts.get('', {
+    params: {
+      id: aptData.id,
+      aptName: aptData.aptName,
+    },
+  });
+}
+
+function fetchAPT(aptData) {
+  return posts.get('', {
+    params: {
+      page: aptData.page,
+      size: 20,
+      cityL: aptData.cityL,
+      cityM: aptData.cityM,
+      cityS: aptData.cityS,
+    },
+  });
 }
 
 // 특정 학습 노트를 조회하는 API
-function fetchPost(postId) {
-  return posts.get(postId);
+function fetchPost(aptData) {
+  return posts.get('detail', {
+    params: {
+      id: aptData.id,
+      aptName: aptData.aptName,
+    },
+  });
 }
 
 // 학습 노트 데이터를 생성하는 API
@@ -26,4 +57,4 @@ function editPost(postId, postData) {
   return posts.put(postId, postData);
 }
 
-export { fetchPosts, fetchPost, createPost, deletePost, editPost };
+export { fetchPosts, fetchPost, createPost, deletePost, editPost, fetchAPT };

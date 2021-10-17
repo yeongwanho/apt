@@ -32,7 +32,8 @@ const router = new VueRouter({
       meta: { auth: true },
     },
     {
-      path: '/post/:id',
+      path: '/api/apt/detail',
+      name: 'APT',
       component: () => import('@/views/PostEditPage.vue'),
       meta: { auth: true },
     },

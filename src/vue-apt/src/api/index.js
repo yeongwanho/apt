@@ -16,7 +16,7 @@ function createInstanceWithAuth(url) {
 }
 
 export const instance = createInstance();
-export const posts = createInstanceWithAuth('posts');
+export const posts = createInstanceWithAuth('apt');
 
 // CREATE - posts
 // POST - posts
