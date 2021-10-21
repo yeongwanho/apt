@@ -30,26 +30,18 @@ public class MemberController {
 
 
     @PostMapping("/api/login")
-    public ResponseEntity<Map<String,Object>> login(@RequestBody String member2, HttpServletResponse response) throws JsonProcessingException {
-        List<Member> all = memberService.findAll();
-        System.out.println(all);
-        Member member1 = objectMapper.readValue(member2, Member.class);
+    public ResponseEntity<Map<String,Object>> login(@RequestBody String login) throws JsonProcessingException {
+        Member member = objectMapper.readValue(login, Member.class);
         Map<String,Object> resultMap= new HashMap<>();
-        System.out.println("//////");
         HttpStatus status= null;
         try {
-            List<Member> members = memberService.loginMember(member1);
-            if (members.size()>2){
-                System.out.println("체크 해봐야됨");
-            }
-            Member member = members.get(0);
-            String token = jwtService.create(member);
-            System.out.println(token);
-            response.setHeader("jwt-auth-token",token);
+            List<Member> members = memberService.loginMember(member);
+            Member member1 = members.get(0);
+            String token = jwtService.create(member1);
+            resultMap.put("loginId",member1.getLoginId());
             resultMap.put("status",true);
-            resultMap.put("data",member);
+            resultMap.put("data",member1);
             resultMap.put("token",token);
-
             status= HttpStatus.ACCEPTED;
             System.out.println(token);
         }catch (RuntimeException e){

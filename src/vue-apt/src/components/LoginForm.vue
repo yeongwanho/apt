@@ -13,7 +13,7 @@
         </div>
         <div>
           <label for="password">pw:</label>
-          <input id="password" type="text" v-model="password" />
+          <input id="password" type="password" v-model="password" />
         </div>
         <button
           :disabled="!isUsernameValid || !password"
@@ -63,6 +63,7 @@ export default {
         //console.log(error);
         //console.log(error.response.data);
         // this.logMessage = error.response.data;
+        console.log(error);
       } finally {
         this.initForm();
       }

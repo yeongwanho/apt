@@ -177,7 +177,11 @@ a:hover {
 	color: #fc5185;
 }
 .ion-md-create {
+	cursor: pointer;
 	padding-left: 0.1rem;
+}
+.ion-md-create:hover {
+	color: #fc5185;
 }
 .create-button {
 	width: 60px;

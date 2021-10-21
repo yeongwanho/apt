@@ -23,6 +23,7 @@ export default {
     this.gradient.addColorStop(0.5, 'rgba(255, 0, 0, 0.25)');
     this.gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
 
+    console.log('차트내부');
     console.log(this.aptDate);
     console.log(this.aptPrice);
     console.log(this.aptName);

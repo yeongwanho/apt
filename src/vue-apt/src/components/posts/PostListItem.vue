@@ -9,7 +9,11 @@
       {{ postItem.aptName }}
 
       {{ postItem.aptRow }} 층 {{ postItem.price }} 만원
-      <b-icon icon="plus-circle" @click="aptDetail"></b-icon>
+      <font-awesome-icon
+        icon="info"
+        @click="aptDetail"
+        class="ion-md-create"
+      ></font-awesome-icon>
     </div>
     <div class="post-time">
       {{ $moment(postItem.contractDate).format('YYYY-MM-DD') }}
@@ -18,7 +22,11 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { deletePost } from '@/api/posts';
+import VueCookies from 'vue-cookies';
+import Vue from 'vue';
+Vue.use(VueCookies);
 
 export default {
   props: {
@@ -27,13 +35,10 @@ export default {
       required: true,
     },
   },
+  components: {
+    FontAwesomeIcon,
+  },
   methods: {
-    async deleteItem() {
-      if (confirm('You want to delete it?')) {
-        await deletePost(this.postItem._id);
-        this.$emit('refresh');
-      }
-    },
     routeEditPage() {
       const id = this.postItem._id;
       this.$router.push(`/post/${id}`);
@@ -45,10 +50,10 @@ export default {
     },
     aptDetail() {
       console.log(this.postItem);
-      const id = this.postItem.id;
+      const id = this.postItem.aptId;
       const aptName = this.postItem.aptName;
 
-      this.$router.push({ name: 'APT', params: { id: id, aptName: aptName } });
+      this.$router.push({ name: 'APT', query: { id: id, aptName: aptName } });
     },
   },
   created() {

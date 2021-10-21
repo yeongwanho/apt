@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     async infiniteHandler($state) {
-      console.log(this.page);
       // this.isLoading = true;
       const aptData = {
         cityL: this.cityL,
@@ -67,18 +66,12 @@ export default {
         cityS: this.cityS,
         page: this.page,
       };
-      console.log($state);
 
       const { data } = await fetchAPT(aptData);
       if (data.content) {
         this.page += 1;
         this.postItems.push(...data.content);
-        console.log(data.content.length);
-        console.log(data);
-        console.log('*-*-*-*-*-');
 
-        console.log(this.postItems);
-        console.log(this.page);
         if (data.content.length < 20) {
           $state.complete();
         }
@@ -91,18 +84,13 @@ export default {
       // this.postItems.push = data.content;
     },
     searchCityData(aptData) {
-      console.log('씽크');
       this.cityL = aptData.cityL;
       this.cityM = aptData.cityM;
       this.cityS = aptData.cityS;
       this.infiniteId += 1;
       this.page = 0;
       this.postItems = [];
-      console.log(this.cityS);
     },
-  },
-  created() {
-    console.log('creates');
   },
 };
 </script>

@@ -11,13 +11,8 @@ function fetchPosts(page) {
     },
   });
 }
-function fetchDetailApt(aptData) {
-  return posts.get('', {
-    params: {
-      id: aptData.id,
-      aptName: aptData.aptName,
-    },
-  });
+function fetchDetailApt(commentData) {
+  return posts.post('comment', commentData);
 }
 
 function fetchAPT(aptData) {
@@ -44,7 +39,7 @@ function fetchPost(aptData) {
 
 // 학습 노트 데이터를 생성하는 API
 function createPost(postData) {
-  return posts.post('/', postData);
+  return posts.post('comment', postData);
 }
 
 // 학습 노트 데이터를 삭제하는 API
@@ -57,4 +52,12 @@ function editPost(postId, postData) {
   return posts.put(postId, postData);
 }
 
-export { fetchPosts, fetchPost, createPost, deletePost, editPost, fetchAPT };
+export {
+  fetchPosts,
+  fetchPost,
+  createPost,
+  deletePost,
+  editPost,
+  fetchAPT,
+  fetchDetailApt,
+};

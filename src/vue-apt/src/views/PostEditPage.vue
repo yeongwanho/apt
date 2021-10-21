@@ -1,17 +1,23 @@
 <template>
   <div class="form-container">
-    <PostEditForm></PostEditForm>
+    <chart-view></chart-view>
   </div>
 </template>
 
 <script>
-import PostEditForm from '@/components/posts/PostEditForm.vue';
+import ChartView from '@/components/posts/chartView.vue';
 
 export default {
   components: {
-    PostEditForm,
+    ChartView,
   },
 };
 </script>
-
-<style></style>
+<style scoped>
+.form-container {
+  margin: auto;
+  width: auto;
+  display: grid;
+  gap: 30px;
+}
+</style>

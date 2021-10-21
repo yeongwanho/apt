@@ -1,9 +1,12 @@
 package com.project.apt.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -11,7 +14,7 @@ import javax.persistence.*;
 public class Apt {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "apt_id")
     private Long id;
 
     @Column(name = "city_l")
@@ -38,4 +41,7 @@ public class Apt {
     private String roadName;
 
     private String etc;
+
+    @OneToMany(mappedBy = "apt",cascade = CascadeType.ALL)
+    private List<Comments> commentItems= new ArrayList<>();
 }
